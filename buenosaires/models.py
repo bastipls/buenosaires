@@ -34,12 +34,14 @@ class Producto(models.Model):
         return self.nombre
 
 class Orden(models.Model):
-    cliente = models.ForeignKey(User)
+    cliente = models.ForeignKey(User,on_delete=models.CASCADE)
     estado = (('Espera','Espera'),
               ('Enviada','Enviada'))
     fecha_emision = models.DateField(default=timezone.now)
-    estado = models.models.models.CharField(choices=estado,default='Espera',max_length=20)
-    fecha_llegada = models.DateField()
+    estado = models.CharField(choices=estado,default='Espera',max_length=20)
+    fecha_llegada = models.DateField(blank=True,null=True)
+    def __int__(self):
+        return self.id
 
 class Producto_proveedor(models.Model):
     nombre = models.CharField(max_length=40)
