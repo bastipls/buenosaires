@@ -1,0 +1,14 @@
+.general-container{
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 10px;
+    flex-wrap: wrap;
+   
+}
+.card{
+    margin: 10px;
+}
+.card img{
+    max-height: 230px;
+    height: 100%;
+}

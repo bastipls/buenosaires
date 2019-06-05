@@ -7,17 +7,16 @@ from django.utils import timezone
 class Usuario(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     direccion = models.CharField(max_length=50)
-    tipo = models.BooleanField(default=False)
-    n_tarjeta = models.IntegerField()
+    n_tarjeta = models.IntegerField(null=True,blank=False)
 
 
 @receiver(post_save, sender=User)
-def create_user(sender, instance, created, **kwargs):
+def create_user_usuario(sender, instance, created, **kwargs):
     if created:
         Usuario.objects.create(user=instance)
 
 @receiver(post_save, sender=User)
-def save_user(sender, instance, **kwargs):
+def save_user_usuario(sender, instance, **kwargs):
     instance.usuario.save()
 
 class Producto(models.Model):

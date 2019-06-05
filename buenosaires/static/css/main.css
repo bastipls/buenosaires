@@ -1,0 +1,48 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+  
+}
+img{
+    max-width: 100%;
+}
+.general-container{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    min-height: 93vh;
+    margin-top: 7vh;;
+}
+#alert {
+    padding: 20px;
+    background-color: rgb(107,189,110,0.7); /* Red */
+    color: white;
+    margin-bottom: 15px;
+    width: 60%;
+    margin-top: 30px;
+    position: absolute;
+    border-radius: 20px;
+    border: 1px solid rgb(107,189,110,0.7);
+    z-index: 1;
+    text-align: center;
+
+  }
+  
+  /* The close button */
+  .closebtn {
+    margin-left: 15px;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  /* When moving the mouse over the close button */
+  .closebtn:hover {
+    color: black;
+  }

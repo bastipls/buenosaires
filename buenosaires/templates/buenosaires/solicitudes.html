@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+{% load static %}
+{% load permission_tags %}
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitudes</title>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/menu.css' %}">
+    <link rel="stylesheet" href="{% static 'css/solicitudes.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    {% comment %} <link href="https://file.myfontastic.com/K9B3SyNkABQPJah8pPK9eE/icons.css" rel="stylesheet"> {% endcomment %}
+</head>
+
+<body>
+    <div class="menu-container">
+        <a href="index.html" class="container-icon">
+            <span class="icon-paw"></span>
+            <p class="icon-text">Buenos aires</p>
+        </a>
+        <span class="icon-bars" id="btn-menu"></span>
+        <nav id="navegador">
+            <ul>
+                <li class="item-user">
+
+                    Bienvenido!
+                </li>
+                <li><a href="index.html" class="item-link">Inicio</a></li>
+                <li><a href="formulario.html" class="item-link">Registro</a></li>
+                <li><a href="listar_perro.html" class="item-link">Nuestros Perros</a></li>
+
+            </ul>
+        </nav>
+    </div>
+    
+    <div class="general-container">
+        <h2>Mis Solicitudes</h2>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr class="table-active">
+                        <th scope="col">Examen</th>
+                        <th scope="col">Rut</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Descripcion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">13213</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>       <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#detalle">
+                                        Ver detalle
+                                    </button>
+                                      
+                                      <!-- Modal -->
+                                      <div class="modal fade" id="detalle" tabindex="-1" role="dialog" aria-labelledby="1" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-scrollable" role="document">
+                                          <div class="modal-content">
+                                            <div class="modal-header">
+                                              <h5 class="modal-title" id="detalle">Modal title</h5>
+                                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                              </button>
+                                            </div>
+                                            <div class="modal-body">
+                                              Rut 1 asdasdsad
+                                              <br>
+                                              saddassad
+                                              dadadasd
+                                              asdsadsadsad
+                                            </div>
+                                            <div class="modal-footer">
+                                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                           
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div></td>
+                    </tr>
+                       <tr>
+                        <th scope="row">13213</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td> 
+                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#detalle">
+                                        Ver detalle
+                                    </button>
+                                      
+                                      <!-- Modal -->
+                                      <div class="modal fade" id="detalle" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-scrollable" role="document">
+                                          <div class="modal-content">
+                                            <div class="modal-header">
+                                              <h5 class="modal-title" id="detalle">Modal title</h5>
+                                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                              </button>
+                                            </div>
+                                            <div class="modal-body">
+                                              Rut 2 asdasdsad
+                                              <br>
+                                              saddassad
+                                              dadadasd
+                                              asdsadsadsad
+                                            </div>
+                                            <div class="modal-footer">
+                                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                           
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                            </td>
+                    </tr>
+                       <tr>
+                        <th scope="row">13213</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>       <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#detalle">
+                                        Ver detalle
+                                    </button>
+                                      
+                                      <!-- Modal -->
+                                      <div class="modal fade" id="detalle" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-scrollable" role="document">
+                                          <div class="modal-content">
+                                            <div class="modal-header">
+                                              <h5 class="modal-title" id="detalle">Examen paciente </h5>
+                                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                              </button>
+                                            </div>
+                                            <div class="modal-body">
+                                              Rut 3 asdasdsad
+                                              <br>
+                                              saddassad
+                                              dadadasd
+                                              asdsadsadsad
+                                            </div>
+                                            <div class="modal-footer">
+                                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                           
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+       
+    </div>
+   <script src="{% static 'js/jquery-3.3.1.slim.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/javamenu.js' %}"></script>
+</body></html>
+
+
+
+

@@ -1,0 +1,28 @@
+body{
+    
+}
+.general-container {
+    margin-top: 0;
+    background:url(../img/img-about.jpg);
+    flex-direction: column;
+    justify-content: flex-start;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.general-container form {
+    width: 80%;
+    height: 100vh;
+    padding: 20px;
+    padding-top: 80px;
+    background: rgb(1,114,76)
+}
+
+@media screen and (min-width:700px){
+    .general-container form {
+        width: 50%;
+    }
+}

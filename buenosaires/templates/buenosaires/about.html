@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+{% load static %}
+{% load permission_tags %}
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/menu.css' %}">
+    <link rel="stylesheet" href="{% static 'css/about.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link href="https://file.myfontastic.com/K9B3SyNkABQPJah8pPK9eE/icons.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="menu-container">
+        <a href="index.html" class="container-icon">
+            <span class="icon-paw"></span>
+            <p class="icon-text">Buenos Aires</p>
+        </a>
+        <span class="icon-bars" id="btn-menu"></span>
+        <nav id="navegador">
+            <ul>
+                <li class="item-user">
+
+                    Bienvenido!
+                </li>
+                <li><a href="{% url 'inicio' %}" class="item-link">Inicio</a></li>
+                {% if user.is_anonymous  %}
+                <li><a href="{% url 'registro' %}" class="item-link">Registro</a></li>
+                {% endif %}
+                {% if user|has_role:'cliente' %}
+                <li><a href="lisa" class="item-link">Mis Solicitudes</a></li>
+                {% else %}
+                <li><a href="lisa" class="item-link">Solicitudes</a></li>
+                {% endif %}
+
+
+
+                <li><a href="listar_perro.html" class="item-link">Nuestros Perros</a></li>
+                {% if user.is_authenticated %}
+
+                <li>
+                    <form action="{% url 'logout' %}" method="post">
+                        {% csrf_token %}
+                        <input class="item-link" type="submit" value="Cerrar Sesion">
+                    </form>
+                </li>
+
+                {% else %}
+                <li><a href="{% url 'login' %}" class="item-link">Login</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+    <div class="general-container">
+        <div class="img-container">
+            <img src="{% static 'img/img-about.jpg' %}" alt="Imagen doctor">
+        </div>
+        <div class="item-about">
+            <h2>Lorem ipsum dolore.</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime neque qui aspernatur voluptate error,
+                maiores deleniti, totam quis ad natus quo impedit recusandae quos quas veniam porro est quod ut. Lorem
+                ipsum dolor sit amet, consectetur adipisicing elit. Consequatur doloremque dolorum ea accusantium
+                excepturi, cum vitae aliquam harum, ducimus dignissimos. Voluptate dolor dolores error, eos aut debitis
+                veniam consequatur dolorem!</p>
+        </div>
+    </div>
+    <script src="{% static 'js/jquery-3.3.1.slim.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/javamenu.js' %}"></script>
+</body>
+
+</html>

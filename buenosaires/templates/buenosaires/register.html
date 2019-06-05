@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+{% load static %}
+{% load permission_tags %}
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/menu.css' %}">
+    <link rel="stylesheet" href="{% static 'css/first-register.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+
+</head>
+
+<body>
+    <div class="menu-container">
+        <a href="index.html" class="container-icon">
+            <span class="icon-paw"></span>
+            <p class="icon-text">Buenos Aires</p>
+        </a>
+        <span class="icon-bars" id="btn-menu"></span>
+        <nav id="navegador">
+            <ul>
+                <li class="item-user">
+
+                    Bienvenido!
+                </li>
+                <li><a href="{% url 'inicio' %}" class="item-link">Inicio</a></li>
+                {% if user.is_anonymous  %}
+                <li><a href="{% url 'registro' %}" class="item-link">Registro</a></li>
+                {% endif %}
+                {% if user|has_role:'cliente' %}
+                <li><a href="lisa" class="item-link">Mis Solicitudes</a></li>
+                {% else %}
+                <li><a href="lisa" class="item-link">Solicitudes</a></li>
+                {% endif %}
+
+
+
+                <li><a href="listar_perro.html" class="item-link">Nuestros Perros</a></li>
+                {% if user.is_authenticated %}
+
+                <li>
+                    <form action="{% url 'logout' %}" method="post">
+                        {% csrf_token %}
+                        <input class="item-link" type="submit" value="Cerrar Sesion">
+                    </form>
+                </li>
+
+                {% else %}
+                <li><a href="{% url 'login' %}" class="item-link">Login</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+    <div class="general-container">
+
+        <form class="bg-light rounded
+" method="post">{% csrf_token %}
+            <h2>Registrarse</h2>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col">
+                        <input name="txtnombre" type="text" class="form-control" placeholder="Nombres">
+                    </div>
+                    <div class="col">
+                        <input name="txtapellido" type="text" class="form-control" placeholder="Apellidos">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+
+                <input name="txtdireccion" id="txtdireccion" placeholder="Direccion" class="form-control  "
+                    type="eamil">
+            </div>
+            <div class="form-group">
+                <label for="">N Tarjeta</label>
+                <input name="txttarjeta" class="form-control" type="number">
+            </div>
+            <div class="form-group">
+                <label for="txtemail">Email:</label>
+                <input name="txtemail" id="txtemail" placeholder="ejemplo@gmail.com"
+                    class="form-control form-control-lg " type="eamil">
+            </div>
+            <div class="form-group">
+                <label for="txtpass">Contraseña:</label>
+                <input name='txtpass' id="txtpass" placeholder="***********************" class="form-control form-control-lg "
+                    type="password">
+            </div>
+            <div class="form-groupc " align="center">
+                <button type="submit" class="btn   btn-info btn-lg">Registrarse</button>
+            </div>
+        </form>
+    </div>
+    <script src="{% static 'js/jquery-3.3.1.slim.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/javamenu.js' %}"></script>
+</body>
+
+</html>

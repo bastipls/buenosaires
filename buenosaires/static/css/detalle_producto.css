@@ -1,0 +1,43 @@
+.general-container{
+    justify-content: center;
+    align-items: center;
+    margin-top: 0;
+}
+.container-detail{
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    width: 90%;
+    height: 400px;
+    flex-wrap: wrap;
+}
+.container-info{
+    width:100%;
+   
+
+}
+.container-info:first-child{
+    background: ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container-info:last-child{
+    background: ;
+}
+
+.container-info img {
+    max-width: 300px;
+    
+}
+.container-info .btn-primary {
+    margin-top: 10px;
+}
+@media screen and (min-width:760px){
+    .container-info{
+        width: 48%;
+    }
+    
+}
+

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <link rel="stylesheet" href="{% static 'css/icons.css' %}">
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+   
+    <title>Login</title>
+</head>
+<body>
+  
+    <div class="general-container">
+     <a id="volver" class="btn btn-secondary" href="{% url 'inicio' %}">Volver</a>
+         {% if messages %}
+        {% for message in messages %}
+        <div class="wow wobble" id="alert">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            <strong> {{ message }} </strong>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <form method="post" class="login-form"  > {% csrf_token %}
+      
+            <div class="container-icon wow bounceInDown">
+                    <label class="icon-user wow swing"  data-wow-duration="1.5s"></label>
+            </div>
+            <div class="container-input">
+                <input name="txtuser" class="wow bounceInLeft" type="text" placeholder="Usuario">
+            </div>
+            <div class="container-input">
+                <input name="txtpass" class="wow bounceInRight" type="password" placeholder="******************">
+            </div>
+            <div class="container-input">
+                <button type="submit" class="wow bounceInUp">LOGIN</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="{% static 'js/wow.js' %}"></script>
+    <script>
+            new WOW().init();
+ </script>
+</body>
+</html>
