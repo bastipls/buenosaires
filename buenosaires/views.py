@@ -1,15 +1,18 @@
+from builtins import object
+
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.template.context_processors import request
 from django.urls import reverse
+from rolepermissions.checkers import has_role
 from rolepermissions.roles import assign_role
 from rolepermissions.utils import user_is_authenticated
 
-from buenosaires.models import Usuario
+from buenosaires.models import Orden, Producto, Usuario
 
 
 def login_view(request):
@@ -56,15 +59,50 @@ def registro(request):
     return render(request,'buenosaires/register.html',variables)
 def inicio(request):
     if request.user.is_authenticated:
+        
         print(request.user.pk)
     variables = {}
     return render(request,'buenosaires/about.html',variables)
 
 def crear_producto(request):
-    pass
+    producto = Producto()
+    alert = 'verde' 
+    if request.method == 'POST':
+        producto.nombre = request.POST.get('txtnombre')
+        producto.imagen = request.FILES.get('txtimagen')
+        producto.medidas = request.POST.get('txtmedidas')
+        producto.stock = int(request.POST.get('txtstock'))
+        producto.precio = int(request.POST.get('txtprecio'))
+        producto.descripcion = request.POST.get('txtdescripcion')  
+        
+        try:
+            producto.save()
+            messages.success(request,"Producto creado con exito")
+        except:
+            alert ='roja'
+            messages.error(request,"No se pudo crear el producto")
+    variables = {'alert':alert}
+    return render(request,'buenosaires/crear_producto.html',variables)
+def productos(request):
+    
+    productos = Producto.objects.all()
+    variables = {}
+    return render(request,'buenosaires/productos.html',variables)
 def detalle_producto(request):
-    pass
+    variables = {}
+    return render(request,'buenosaires/detalle_producto.html',variables)
 def solocitar_mantencion(request):
-    pass
+    orden = Orden()
+    if request.method == 'POST':
+       orden.ho
+
+    return render(request,'buenosaires/solicitar_mantencion.html')
 def lsita_solicitudes(request):
-    pass
+    user = Users.object.get(id=request.user.pk)
+    if has_role(user,[Cliente]):
+        ordenes = Orden.objects.filter(cliente=request.user.pk)
+    elif request.user.is_staff() or request.user.is_superuser():
+        ordenes = Orden.objects.all()
+    variables = {}
+
+    return render(request,'buenosaires/solicitudes.html',variables)

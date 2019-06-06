@@ -16,9 +16,23 @@ img{
     min-height: 93vh;
     margin-top: 7vh;;
 }
-#alert {
+#alert-verde {
     padding: 20px;
-    background-color: rgb(107,189,110,0.7); /* Red */
+    background-color: rgb(107,189,110,0.7); /* verde */
+    color: white;
+    margin-bottom: 15px;
+    width: 60%;
+    margin-top: 30px;
+    position: absolute;
+    border-radius: 20px;
+    border: 1px solid rgb(107,189,110,0.7);
+    z-index: 1;
+    text-align: center;
+
+  }
+  #alert-roja {
+    padding: 20px;
+    background-color: rgba(197, 44, 44, 0.7); /* Red */
     color: white;
     margin-bottom: 15px;
     width: 60%;

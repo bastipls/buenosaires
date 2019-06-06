@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{% static 'css/menu.css' %}">
     <link rel="stylesheet" href="{% static 'css/solicitar_mantencion.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    {% comment %} <link href="https://file.myfontastic.com/K9B3SyNkABQPJah8pPK9eE/icons.css" rel="stylesheet"> {% endcomment %}
+    <link href="https://file.myfontastic.com/K9B3SyNkABQPJah8pPK9eE/icons.css" rel="stylesheet">
 </head>
 
 <body>
@@ -24,41 +24,59 @@
             <ul>
                 <li class="item-user">
 
-                    Bienvenido!
+                    Bienvenido! {{ request.user.get_full_name }}
                 </li>
-                <li><a href="index.html" class="item-link">Inicio</a></li>
-                <li><a href="formulario.html" class="item-link">Registro</a></li>
-                <li><a href="listar_perro.html" class="item-link">Nuestros Perros</a></li>
+                <li><a href="{% url 'inicio' %}" class="item-link">Inicio</a></li>
+                {% if user.is_anonymous  %}
+                <li><a href="{% url 'registro' %}" class="item-link">Registro</a></li>
+                {% endif %}
+                {% if user|has_role:'cliente' %}
+                <li><a href="{% url 'lista_solicitudes' %}" class="item-link">Mis Solicitudes</a></li>
+                {% elif user.is_authenticated %}
+                <li><a href="{% url 'lsita_solicitueds' %}" class="item-link">Solicitudes</a></li>
+                {% endif %}    
+                {% if user|has_role:'cliente' %}
+                 <li><a href="{% url 'solicitar_mantencion' %}" class="item-link">Solicitar Mantencion</a></li>
+                {% endif %}
+                <li><a href="{% url 'productos' %}" class="item-link">Productos</a></li>
+                {% if user.is_authenticated %}
+                <li>
+                    <form action="{% url 'logout' %}" method="post">
+                        {% csrf_token %}
+                        <input class="item-link" type="submit" value="Cerrar Sesion">
+                    </form>
+                </li>
 
+                {% else %}
+                <li><a href="{% url 'login' %}" class="item-link">Login</a></li>
+                {% endif %}
             </ul>
         </nav>
     </div>
-
     <div class="general-container">
         <form class="bg-light rounded" action="">
             <div class="row">
                 <div class="col">
-                    <label for="">Hora:</label>
-                    <input id="" class="form-control " type="time">
+                    <label for="txthora">Hora:</label>
+                    <input name="txthora" id="txthora" class="form-control " type="time">
                 </div>
                 <div class="col">
-                    <label for="">Fecha:</label>
-                    <input id="" class="form-control" type="date">
+                    <label for="txtfecha">Fecha:</label>
+                    <input name="txtfecha" id="txtfecha" class="form-control" type="date">
                 </div>
             </div>
             <div class="form-group">
                 <label for="txttipo">Tipo de solicitud</label>
-                <select id="txttipo" class="form-control" name="" id="">
+                <select name=""txttipo  id="txttipo" class="form-control" name="" id="">
                     <option value="" slected>Mantención </option>
                     <option value="">Reparación</option>
                 </select>
             </div>
             <div class="form-group">
-                <label for="">Descripción del problema:</label>
-                <textarea class="form-control" name="" id="" cols="30" rows="10"></textarea>
+                <label for="txtdescripcion">Descripción del problema:</label>
+                <textarea class="form-control" name="txtdescripcion" id="txtdescripcion" cols="30" rows="10"></textarea>
             </div>
         </form>
-
 
 
     </div>

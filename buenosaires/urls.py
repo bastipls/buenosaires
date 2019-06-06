@@ -6,7 +6,12 @@ urlpatterns = [
     path('', views.inicio, name='inicio'),
     path('registro/',views.registro,name ='registro'),
     path('login/',views.login_view, name = 'login'),
-    path('logout/',views.logout_view,name='logout')
+    path('logout/',views.logout_view,name='logout'),
+    path('solicitudes/',views.lsita_solicitudes,name='lista_solicitudes'),
+    path('productos/',views.productos,name='productos'),
+    path('productos/crear_productos/',views.crear_producto,name = 'çrear_producto'),
+    path('productos/detalle_producto/',views.detalle_producto, name='detalle_producto'),
+    path('solicitar_mantencion/',views.solocitar_mantencion,name='solicitar_mantencion'),
   
 ]
 if settings.DEBUG:

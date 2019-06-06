@@ -25,8 +25,8 @@ class Producto(models.Model):
     medidas = models.CharField(max_length=50)
     stock = models.PositiveIntegerField()
     precio = models.IntegerField()
-    disponibilidad = models.BooleanField()
-    descripcion = models.TextField()
+    disponibilidad = models.BooleanField(default=True)
+    descripcion = models.TextField(blank=True,null=True)
     class Meta:
         ordering = ('nombre',)
     def __str__(self):
@@ -36,6 +36,7 @@ class Orden(models.Model):
     cliente = models.ForeignKey(User,on_delete=models.CASCADE)
     estado = (('Espera','Espera'),
               ('Enviada','Enviada'))
+    codigo = models.IntegerField()
     fecha_emision = models.DateField(default=timezone.now)
     estado = models.CharField(choices=estado,default='Espera',max_length=20)
     fecha_llegada = models.DateField(blank=True,null=True)
