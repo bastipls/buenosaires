@@ -39,30 +39,32 @@
     
         <div class="container-detail">
             <div class="container-info">
-                <img src="img/aire-1.jpg" alt="">
+            {% if producto.imagen %}
+             <img src="{{ producto.imagen.url }}" alt="">
+            {% endif %}
+               
 
             </div>
             <div class="container-info">
-                <h2>Pn pa la</h2>
-                <h6>Anais</h6>
-                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officiis quod provident, quis doloribus
-                    blanditiis perspiciatis quam eos odit ex labori.</p>
+                <h2>{{ producto.nombre }}</h2>
+                <h6>{{  producto.precio }}</h6>
+                <p>{{  producto.descripcion }}</p>
                 <table class="table table-striped">
 
                     <tbody>
                         <tr>
                             <td>Marca:</td>
-                            <td>Anais</td>
+                            <td>None</td>
 
                         </tr>
                         <tr>
                             <td>Medidas:</td>
-                            <td>1.65</td>
+                            <td>{{ producto.medidas }}</td>
 
                         </tr>
                         <tr>
                             <td>Peso:</td>
-                            <td>100kg</td>
+                            <td>none</td>
 
                         </tr>
 

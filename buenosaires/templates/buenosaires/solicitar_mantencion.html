@@ -2,6 +2,7 @@
 {% load static %}
 {% load permission_tags %}
 <html lang="es">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,9 +35,9 @@
                 <li><a href="{% url 'lista_solicitudes' %}" class="item-link">Mis Solicitudes</a></li>
                 {% elif user.is_authenticated %}
                 <li><a href="{% url 'lsita_solicitueds' %}" class="item-link">Solicitudes</a></li>
-                {% endif %}    
+                {% endif %}
                 {% if user|has_role:'cliente' %}
-                 <li><a href="{% url 'solicitar_mantencion' %}" class="item-link">Solicitar Mantencion</a></li>
+                <li><a href="{% url 'solicitar_mantencion' %}" class="item-link">Solicitar Mantencion</a></li>
                 {% endif %}
                 <li><a href="{% url 'productos' %}" class="item-link">Productos</a></li>
                 {% if user.is_authenticated %}
@@ -54,10 +55,18 @@
         </nav>
     </div>
     <div class="general-container">
-        <form class="bg-light rounded" action="">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="wow wobble" id="alert-{{ alert }}">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            <strong> {{ message }} </strong>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <form class="bg-light rounded" method="POST" action="">{% csrf_token %}
             <div class="row">
                 <div class="col">
-                    <label for="txthora">Hora:</label>
+                    <label for="txthora">Hora disponible:</label>
                     <input name="txthora" id="txthora" class="form-control " type="time">
                 </div>
                 <div class="col">
@@ -67,25 +76,26 @@
             </div>
             <div class="form-group">
                 <label for="txttipo">Tipo de solicitud</label>
-                <select name=""txttipo  id="txttipo" class="form-control" name="" id="">
-                    <option value="" slected>Mantención </option>
-                    <option value="">Reparación</option>
+                <select name="txttipo" id="txttipo" class="form-control">
+                    <option value="Mantencion" selected>Mantención </option>
+                    <option value="Reparacion">Reparación</option>
                 </select>
             </div>
             <div class="form-group">
                 <label for="txtdescripcion">Descripción del problema:</label>
                 <textarea class="form-control" name="txtdescripcion" id="txtdescripcion" cols="30" rows="10"></textarea>
             </div>
+            <div class="form-group center-block ">
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </div>
         </form>
 
 
     </div>
-   <script src="{% static 'js/jquery-3.3.1.slim.min.js' %}"></script>
+    <script src="{% static 'js/jquery-3.3.1.slim.min.js' %}"></script>
     <script src="{% static 'js/popper.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/javamenu.js' %}"></script>
-</body></html>
+</body>
 
-
-
-
+</html>

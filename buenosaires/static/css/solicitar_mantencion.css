@@ -6,7 +6,14 @@
 .general-container form {
     padding: 15px;
 }
-
+#alert-verde{
+    z-index: 100;
+    top: -20px;
+}
+#alert-roja{
+    z-index: 100;
+    top: -20px;
+}
 @media screen and (min-width:768px) {
     .general-container form {
         width: 70%;

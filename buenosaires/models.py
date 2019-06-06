@@ -1,8 +1,13 @@
-from django.db import models
+from datetime import datetime
+
+from django.conf import settings
+from django.conf.global_settings import AUTH_USER_MODEL
 from django.contrib.auth.models import User
+from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import timezone
+
 
 class Usuario(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -31,13 +36,25 @@ class Producto(models.Model):
         ordering = ('nombre',)
     def __str__(self):
         return self.nombre
+class Solicitud(models.Model):
+    
+    fecha_emision = models.DateTimeField(default=timezone.now())
+    cliente = models.ForeignKey(User,on_delete=models.CASCADE)
+    hora_llegada = models.TimeField()
+    fecha_llegada = models.DateField()
+    tipo = models.CharField(max_length=20)
+    descripcion = models.TextField()
 
+    def __int__(self):
+        return self.id
+
+  
 class Orden(models.Model):
     cliente = models.ForeignKey(User,on_delete=models.CASCADE)
     estado = (('Espera','Espera'),
               ('Enviada','Enviada'))
-    codigo = models.IntegerField()
-    fecha_emision = models.DateField(default=timezone.now)
+    codigo = models.IntegerField(blank=True,null=True)
+    fecha_emision = models.DateField(default=timezone.now())
     estado = models.CharField(choices=estado,default='Espera',max_length=20)
     fecha_llegada = models.DateField(blank=True,null=True)
     def __int__(self):

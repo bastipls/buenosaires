@@ -12,7 +12,8 @@ from rolepermissions.checkers import has_role
 from rolepermissions.roles import assign_role
 from rolepermissions.utils import user_is_authenticated
 
-from buenosaires.models import Orden, Producto, Usuario
+from buenosaires.models import Orden, Producto, Solicitud, Usuario
+from mysite.roles import Cliente
 
 
 def login_view(request):
@@ -68,6 +69,7 @@ def crear_producto(request):
     producto = Producto()
     alert = 'verde' 
     if request.method == 'POST':
+        
         producto.nombre = request.POST.get('txtnombre')
         producto.imagen = request.FILES.get('txtimagen')
         producto.medidas = request.POST.get('txtmedidas')
@@ -86,19 +88,35 @@ def crear_producto(request):
 def productos(request):
     
     productos = Producto.objects.all()
-    variables = {}
+    variables = {'productos':productos}
     return render(request,'buenosaires/productos.html',variables)
-def detalle_producto(request):
-    variables = {}
+def detalle_producto(request,id):
+    producto = Producto.objects.get(id=id)
+    variables = {'producto':producto}
+
+
     return render(request,'buenosaires/detalle_producto.html',variables)
 def solocitar_mantencion(request):
-    orden = Orden()
+    solicitud = Solicitud()
+   
+    alert = 'verde' 
     if request.method == 'POST':
-       orden.ho
 
-    return render(request,'buenosaires/solicitar_mantencion.html')
-def lsita_solicitudes(request):
-    user = Users.object.get(id=request.user.pk)
+        solicitud.cliente = request.user
+        solicitud.hora_llegada = request.POST.get('txthora')
+        solicitud.fecha_llegada = request.POST.get('txtfecha')
+        solicitud.tipo = request.POST.get('txttipo')
+        solicitud.descripcion = request.POST.get('txtdescripcion')
+        try:
+            messages.success(request,'Solicitud enviada')
+        except:
+            alert = 'roja' 
+            messages.error(request,'No se a podido enviar ')
+        solicitud.save()
+    variables = {'alert':alert}
+    return render(request,'buenosaires/solicitar_mantencion.html',variables)
+def lista_solicitudes(request):
+    user = User.objects.get(id=request.user.pk)
     if has_role(user,[Cliente]):
         ordenes = Orden.objects.filter(cliente=request.user.pk)
     elif request.user.is_staff() or request.user.is_superuser():
