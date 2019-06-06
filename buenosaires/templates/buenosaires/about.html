@@ -40,6 +40,9 @@
                  <li><a href="{% url 'solicitar_mantencion' %}" class="item-link">Solicitar Mantencion</a></li>
                 {% endif %}
                 <li><a href="{% url 'productos' %}" class="item-link">Productos</a></li>
+                {% if user.is_staff or user.is_superuser %}
+                 <li><a href="{% url 'crear_producto' %}" class="item-link">Agregar Productos</a></li>
+                {% endif %}
                 {% if user.is_authenticated %}
                 <li>
                     <form action="{% url 'logout' %}" method="post">
