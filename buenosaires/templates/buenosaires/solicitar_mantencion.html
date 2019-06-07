@@ -15,7 +15,7 @@
 </head>
 
 <body>
-    <div class="menu-container">
+   <div class="menu-container">
         <a href="index.html" class="container-icon">
             <span class="icon-paw"></span>
             <p class="icon-text">Buenos Aires</p>
@@ -27,19 +27,22 @@
 
                     Bienvenido! {{ request.user.get_full_name }}
                 </li>
-                <li><a href="{% url 'inicio' %}" class="item-link">Inicio</a></li>
+                <li><a href="{% url 'inicio' %}" class=" item-link">Inicio</a></li>
                 {% if user.is_anonymous  %}
                 <li><a href="{% url 'registro' %}" class="item-link">Registro</a></li>
                 {% endif %}
                 {% if user|has_role:'cliente' %}
                 <li><a href="{% url 'lista_solicitudes' %}" class="item-link">Mis Solicitudes</a></li>
                 {% elif user.is_authenticated %}
-                <li><a href="{% url 'lsita_solicitueds' %}" class="item-link">Solicitudes</a></li>
-                {% endif %}
+                <li><a href="{% url 'lista_solicitudes' %}" class="item-link">Solicitudes</a></li>
+                {% endif %}    
                 {% if user|has_role:'cliente' %}
-                <li><a href="{% url 'solicitar_mantencion' %}" class="item-link">Solicitar Mantencion</a></li>
+                 <li><a href="{% url 'solicitar_mantencion' %}" class="select item-link">Solicitar Mantencion</a></li>
                 {% endif %}
                 <li><a href="{% url 'productos' %}" class="item-link">Productos</a></li>
+                {% if user.is_staff or user.is_superuser %}
+                 <li><a href="{% url 'crear_producto' %}" class="item-link">Agregar Productos</a></li>
+                {% endif %}
                 {% if user.is_authenticated %}
                 <li>
                     <form action="{% url 'logout' %}" method="post">

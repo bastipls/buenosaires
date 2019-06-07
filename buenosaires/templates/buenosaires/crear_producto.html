@@ -34,9 +34,15 @@
                 {% if user|has_role:'cliente' %}
                 <li><a href="{% url 'lista_solicitudes' %}" class="item-link">Mis Solicitudes</a></li>
                 {% elif user.is_authenticated %}
-                <li><a href="{% url 'lsita_solicitueds' %}" class="item-link">Solicitudes</a></li>
+                <li><a href="{% url 'lista_solicitudes' %}" class="item-link">Solicitudes</a></li>
                 {% endif %}    
+                {% if user|has_role:'cliente' %}
+                 <li><a href="{% url 'solicitar_mantencion' %}" class="item-link">Solicitar Mantencion</a></li>
+                {% endif %}
                 <li><a href="{% url 'productos' %}" class="item-link">Productos</a></li>
+                {% if user.is_staff or user.is_superuser %}
+                 <li><a href="{% url 'crear_producto' %}" class="select item-link">Agregar Productos</a></li>
+                {% endif %}
                 {% if user.is_authenticated %}
                 <li>
                     <form action="{% url 'logout' %}" method="post">
@@ -89,6 +95,20 @@
                     </div>
                 </div>
             </div>
+             <div class="form-group">
+                <div class="row">
+                    <div class="col">
+                        <label for="txtmarca">Marca</label>
+                        <input required id="txtmarca" name="txtmarca" type="text" class="form-control" placeholder="">
+                    </div>
+                    <div class="col">
+                        <label for="txtpeso">Peso</label>
+                        <input required type="text" class="form-control"
+                            onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"
+                            name="txtpeso" id="txtpeso" placeholder="">
+                    </div>
+                </div>
+            </div>
             <div class="form-group">
                 <label for="txtprecio">Precio:</label>
                 <input id="txtprecio" name="txtprecio" class="form-control " required type="number">
@@ -99,7 +119,7 @@
             </div>
 
             <div class="form-groupc " align="center">
-                <button type="submit" class="btn   btn-info btn-lg">Registrarse</button>
+                <button type="submit" class="btn   btn-info btn-lg">Crear</button>
             </div>
         </form>
     </div>

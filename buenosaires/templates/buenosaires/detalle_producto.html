@@ -11,11 +11,11 @@
     <link rel="stylesheet" href="{% static 'css/menu.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/detalle_producto.css' %}">
-
+ <link href="https://file.myfontastic.com/K9B3SyNkABQPJah8pPK9eE/icons.css" rel="stylesheet">
 </head>
 
 <body>
-      <div class="menu-container">
+    <div class="menu-container">
         <a href="index.html" class="container-icon">
             <span class="icon-paw"></span>
             <p class="icon-text">Buenos Aires</p>
@@ -27,7 +27,7 @@
 
                     Bienvenido! {{ request.user.get_full_name }}
                 </li>
-                <li><a href="{% url 'inicio' %}" class="item-link">Inicio</a></li>
+                <li><a href="{% url 'inicio' %}" class=" item-link">Inicio</a></li>
                 {% if user.is_anonymous  %}
                 <li><a href="{% url 'registro' %}" class="item-link">Registro</a></li>
                 {% endif %}
@@ -39,7 +39,10 @@
                 {% if user|has_role:'cliente' %}
                  <li><a href="{% url 'solicitar_mantencion' %}" class="item-link">Solicitar Mantencion</a></li>
                 {% endif %}
-                <li><a href="{% url 'productos' %}" class="item-link">Productos</a></li>
+                <li><a href="{% url 'productos' %}" class="select item-link">Productos</a></li>
+                {% if user.is_staff or user.is_superuser %}
+                 <li><a href="{% url 'crear_producto' %}" class="item-link">Agregar Productos</a></li>
+                {% endif %}
                 {% if user.is_authenticated %}
                 <li>
                     <form action="{% url 'logout' %}" method="post">
@@ -56,7 +59,7 @@
     </div>
     <div class="general-container">
     
-        <div class="container-detail">
+        <form class="container-detail">
             <div class="container-info">
             {% if producto.imagen %}
              <img src="{{ producto.imagen.url }}" alt="">
@@ -90,9 +93,71 @@
 
                     </tbody>
                 </table>
-                <button type="submit" class="btn btn-primary">Comprar</button>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                                Comprar
+                              </button>
+                              
+                              <!-- Modal -->
+                              <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="exampleModalLongTitle">Confirmar tarjeta</h5>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <div class="modal-body">
+                                      <div class="form-group">
+                                            <input required type="text" class="form-control"
+                                            onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"
+                                            name="txtnumero" id="txtnumero" placeholder="Numero tarjeta">
+                                      </div>
+                                      <div class="row mx-auto">
+                                          <label class="mx-auto" for="">Expiración</label>
+                                      </div>
+                                      <div class="form-group">
+                                          <div class="row">
+                                              <div class="col">
+                                                    <input placeholder="Mes" class="form-control" type="number">
+                                              </div>
+                                              <span class="my-auto">-</span>
+                                              <div class="col">
+                                                        <input placeholder="Año" class="form-control" type="number">
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="form-group">
+                                            <input required type="text" class="form-control"
+                                            onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"
+                                            name="txtcodigo" id="txtcodigo" placeholder="Codigo tarjeta">
+                                      </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                      
+                                      <button type="submit" class="mx-auto btn btn-primary">Pagar</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                        </div>
+                      
+                            <label class="my-auto"or="txtstock">Cantidad</label>
+                     
+                        <div class="col">
+                            <input required type="text" class="w-50 form-control"
+                            onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"
+                            name="txtstock" id="txtstock" value="1" placeholder="">
+                        </div>
+                    </div>
+                </div>
+               
             </div>
-        </div>
+        </form>
 
 
 

@@ -28,6 +28,8 @@ class Producto(models.Model):
     nombre = models.CharField(max_length=40)
     imagen = models.ImageField(upload_to='producto/%Y/%m/%d', blank=True,default='static/img/default-img.jpg')
     medidas = models.CharField(max_length=50)
+    marca = models.CharField(max_length=20,blank=True,null=True,default='Desconocida')
+    peso = models.PositiveIntegerField(blank=True,null=True)
     stock = models.PositiveIntegerField()
     precio = models.IntegerField()
     disponibilidad = models.BooleanField(default=True)

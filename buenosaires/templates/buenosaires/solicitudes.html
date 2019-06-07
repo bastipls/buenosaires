@@ -32,11 +32,17 @@
         <li><a href="{% url 'registro' %}" class="item-link">Registro</a></li>
         {% endif %}
         {% if user|has_role:'cliente' %}
-        <li><a href="{% url 'lista_solicitudes' %}" class="item-link">Mis Solicitudes</a></li>
-        {% else %}
-        <li><a href="lisa" class="item-link">Solicitudes</a></li>
+        <li><a href="{% url 'lista_solicitudes' %}" class="select item-link">Mis Solicitudes</a></li>
+        {% elif user.is_authenticated %}
+        <li><a href="{% url 'lista_solicitudes' %}" class="select item-link">Solicitudes</a></li>
         {% endif %}
-        <li><a href="listar_perro.html" class="item-link">Nuestros Perros</a></li>
+        {% if user|has_role:'cliente' %}
+        <li><a href="{% url 'solicitar_mantencion' %}" class="item-link">Solicitar Mantencion</a></li>
+        {% endif %}
+        <li><a href="{% url 'productos' %}" class="item-link">Productos</a></li>
+        {% if user.is_staff or user.is_superuser %}
+        <li><a href="{% url 'crear_producto' %}" class="item-link">Agregar Productos</a></li>
+        {% endif %}
         {% if user.is_authenticated %}
         <li>
           <form action="{% url 'logout' %}" method="post">
@@ -44,6 +50,7 @@
             <input class="item-link" type="submit" value="Cerrar Sesion">
           </form>
         </li>
+
         {% else %}
         <li><a href="{% url 'login' %}" class="item-link">Login</a></li>
         {% endif %}
@@ -93,7 +100,7 @@
                       asdsadsadsad
                     </div>
                     <div class="modal-footer">
-                     <button type="button" class="btn btn-primary">Save changes</button>
+                      <button type="button" class="btn btn-primary">Save changes</button>
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
                     </div>
@@ -163,7 +170,7 @@
                       asdsadsadsad
                     </div>
                     <div class="modal-footer">
-                     
+
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
                     </div>

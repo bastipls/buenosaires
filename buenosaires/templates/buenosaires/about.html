@@ -27,7 +27,7 @@
 
                     Bienvenido! {{ request.user.get_full_name }}
                 </li>
-                <li><a href="{% url 'inicio' %}" class="item-link">Inicio</a></li>
+                <li><a href="{% url 'inicio' %}" class="select item-link">Inicio</a></li>
                 {% if user.is_anonymous  %}
                 <li><a href="{% url 'registro' %}" class="item-link">Registro</a></li>
                 {% endif %}

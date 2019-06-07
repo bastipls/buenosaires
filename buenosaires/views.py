@@ -2,7 +2,7 @@ from builtins import object
 
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
@@ -58,13 +58,14 @@ def registro(request):
 
     variables = {}
     return render(request,'buenosaires/register.html',variables)
+
 def inicio(request):
     if request.user.is_authenticated:
         
         print(request.user.pk)
     variables = {}
     return render(request,'buenosaires/about.html',variables)
-
+@user_passes_test(lambda u:u.is_staff, login_url=('login'))
 def crear_producto(request):
     producto = Producto()
     alert = 'verde' 
@@ -74,6 +75,7 @@ def crear_producto(request):
         producto.imagen = request.FILES.get('txtimagen')
         producto.medidas = request.POST.get('txtmedidas')
         producto.stock = int(request.POST.get('txtstock'))
+        ##falta marac y peso eskereeee
         producto.precio = int(request.POST.get('txtprecio'))
         producto.descripcion = request.POST.get('txtdescripcion')  
         
@@ -85,17 +87,20 @@ def crear_producto(request):
             messages.error(request,"No se pudo crear el producto")
     variables = {'alert':alert}
     return render(request,'buenosaires/crear_producto.html',variables)
+   
 def productos(request):
     
     productos = Producto.objects.all()
     variables = {'productos':productos}
     return render(request,'buenosaires/productos.html',variables)
-def detalle_producto(request,id):
+@user_passes_test(lambda u:u.is_authenticated, login_url=('registro'))  
+def detalle_producto(request,id):#falta se crea orden y se resta stock
     producto = Producto.objects.get(id=id)
     variables = {'producto':producto}
 
 
     return render(request,'buenosaires/detalle_producto.html',variables)
+@login_required(login_url='login')
 def solocitar_mantencion(request):
     solicitud = Solicitud()
    
@@ -115,12 +120,21 @@ def solocitar_mantencion(request):
         solicitud.save()
     variables = {'alert':alert}
     return render(request,'buenosaires/solicitar_mantencion.html',variables)
-def lista_solicitudes(request):
+@login_required(login_url='login')
+def lista_solicitudes(request):#faltar probar si funciona aun no lo veo equisde
     user = User.objects.get(id=request.user.pk)
+    ##Me fatlaria filtar por solicitudes mostrar las dos a la vez ordenes y solic
     if has_role(user,[Cliente]):
         ordenes = Orden.objects.filter(cliente=request.user.pk)
     elif request.user.is_staff() or request.user.is_superuser():
         ordenes = Orden.objects.all()
-    variables = {}
+    variables = {'ordenes':ordenes}
 
     return render(request,'buenosaires/solicitudes.html',variables)
+@user_passes_test(lambda u:u.is_staff, login_url=('login'))  
+def detalle_solicitudes(request):##esto es para solicitudes no orden
+    pass
+def enviar_orden(request):# esto es un link que hago click y auto se agregan 3 dias de llegada y cambio estado a enviado
+    pass
+def stock_proveedores(request):#web servies
+    pass

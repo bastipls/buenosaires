@@ -162,6 +162,9 @@ nav input{
         justify-content: center;
         align-items: center;
     }
+    .select{
+        background: #84b8cf;
+    }
     .item-link:hover{
         color: whitesmoke;
     }
