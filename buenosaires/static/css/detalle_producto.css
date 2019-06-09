@@ -31,8 +31,16 @@
     max-width: 300px;
     
 }
-.container-info .btn-primary {
-  
+.custom-file label{
+    overflow: hidden;
+}
+#alert-verde{
+    margin-top: 50px;
+    z-index: 100;
+}
+#alert-roja{
+    margin-top: 50px;
+    z-index: 100;
 }
 @media screen and (min-width:760px){
     .container-info{

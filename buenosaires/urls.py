@@ -11,7 +11,9 @@ urlpatterns = [
     path('productos/',views.productos,name='productos'),
     path('productos/crear_productos/',views.crear_producto,name = 'crear_producto'),
     path('productos/detalle_producto/<int:id>',views.detalle_producto, name='detalle_producto'),
+    path('productos/detalle_producto/eliminar/<int:id>',views.eliminar_producto, name='eliminar_producto'),
     path('solicitar_mantencion/',views.solocitar_mantencion,name='solicitar_mantencion'),
+    path('solicitudes/eliminar/<int:id>',views.enviar_producto,name='enviar_producto'),
   
 ]
 if settings.DEBUG:

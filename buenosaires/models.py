@@ -40,7 +40,7 @@ class Producto(models.Model):
         return self.nombre
 class Solicitud(models.Model):
     
-    fecha_emision = models.DateTimeField(default=timezone.now())
+    fecha_emision = models.DateTimeField(default=timezone.now)
     cliente = models.ForeignKey(User,on_delete=models.CASCADE)
     hora_llegada = models.TimeField()
     fecha_llegada = models.DateField()
@@ -53,18 +53,22 @@ class Solicitud(models.Model):
   
 class Orden(models.Model):
     cliente = models.ForeignKey(User,on_delete=models.CASCADE)
+    producto = models.ForeignKey(Producto,on_delete=models.CASCADE,null=True,blank=True)
     estado = (('Espera','Espera'),
               ('Enviada','Enviada'))
-    codigo = models.IntegerField(blank=True,null=True)
-    fecha_emision = models.DateField(default=timezone.now())
+
+    fecha_emision = models.DateField(default=timezone.now)
     estado = models.CharField(choices=estado,default='Espera',max_length=20)
     fecha_llegada = models.DateField(blank=True,null=True)
     def __int__(self):
         return self.id
 
 class Producto_proveedor(models.Model):
+    nombre_proveedor = models.CharField(max_length=50,null=True,blank=True)
     nombre = models.CharField(max_length=40)
     medidas = models.CharField(max_length=50)
+    marca = models.CharField(max_length=20,default='Desconocida',null=True,blank=True)
+    peso = models.PositiveIntegerField(null=True,blank=True)
     precio = models.IntegerField()
     stock = models.PositiveIntegerField()
     disponibilidad = models.BooleanField()

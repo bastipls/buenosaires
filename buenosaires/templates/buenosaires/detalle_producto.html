@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="{% static 'css/menu.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/detalle_producto.css' %}">
- <link href="https://file.myfontastic.com/K9B3SyNkABQPJah8pPK9eE/icons.css" rel="stylesheet">
+    <link href="https://file.myfontastic.com/K9B3SyNkABQPJah8pPK9eE/icons.css" rel="stylesheet">
 </head>
 
 <body>
@@ -35,13 +35,13 @@
                 <li><a href="{% url 'lista_solicitudes' %}" class="item-link">Mis Solicitudes</a></li>
                 {% elif user.is_authenticated %}
                 <li><a href="{% url 'lista_solicitudes' %}" class="item-link">Solicitudes</a></li>
-                {% endif %}    
+                {% endif %}
                 {% if user|has_role:'cliente' %}
-                 <li><a href="{% url 'solicitar_mantencion' %}" class="item-link">Solicitar Mantencion</a></li>
+                <li><a href="{% url 'solicitar_mantencion' %}" class="item-link">Solicitar Mantencion</a></li>
                 {% endif %}
                 <li><a href="{% url 'productos' %}" class="select item-link">Productos</a></li>
                 {% if user.is_staff or user.is_superuser %}
-                 <li><a href="{% url 'crear_producto' %}" class="item-link">Agregar Productos</a></li>
+                <li><a href="{% url 'crear_producto' %}" class="item-link">Agregar Productos</a></li>
                 {% endif %}
                 {% if user.is_authenticated %}
                 <li>
@@ -58,114 +58,264 @@
         </nav>
     </div>
     <div class="general-container">
-    
-        <form class="container-detail">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="wow wobble" id="alert-{{ alert }}">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            <strong> {{ message }} </strong>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <form method="post" enctype="multipart/form-data" class="container-detail">{% csrf_token %}
+            {% if user.is_staff %}
             <div class="container-info">
-            {% if producto.imagen %}
-             <img src="{{ producto.imagen.url }}" alt="">
-            {% endif %}
-               
+                {% if producto.imagen %}
+                <img src="{{ producto.imagen.url }}" alt="">
 
-            </div>
-            <div class="container-info">
-                <h2>{{ producto.nombre }}</h2>
-                <h6>{{  producto.precio }}</h6>
-                <p>{{  producto.descripcion }}</p>
-                <table class="table table-striped">
-
-                    <tbody>
-                        <tr>
-                            <td>Marca:</td>
-                            <td>None</td>
-
-                        </tr>
-                        <tr>
-                            <td>Medidas:</td>
-                            <td>{{ producto.medidas }}</td>
-
-                        </tr>
-                        <tr>
-                            <td>Peso:</td>
-                            <td>none</td>
-
-                        </tr>
-
-
-                    </tbody>
-                </table>
                 <div class="form-group">
-                    <div class="row">
-                        <div class="col">
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                                Comprar
-                              </button>
-                              
-                              <!-- Modal -->
-                              <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                      <h5 class="modal-title" id="exampleModalLongTitle">Confirmar tarjeta</h5>
-                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                      </button>
-                                    </div>
-                                    <div class="modal-body">
-                                      <div class="form-group">
-                                            <input required type="text" class="form-control"
-                                            onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"
-                                            name="txtnumero" id="txtnumero" placeholder="Numero tarjeta">
-                                      </div>
-                                      <div class="row mx-auto">
-                                          <label class="mx-auto" for="">Expiración</label>
-                                      </div>
-                                      <div class="form-group">
-                                          <div class="row">
-                                              <div class="col">
-                                                    <input placeholder="Mes" class="form-control" type="number">
-                                              </div>
-                                              <span class="my-auto">-</span>
-                                              <div class="col">
-                                                        <input placeholder="Año" class="form-control" type="number">
-                                              </div>
-                                          </div>
-                                      </div>
-                                      <div class="form-group">
-                                            <input required type="text" class="form-control"
-                                            onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"
-                                            name="txtcodigo" id="txtcodigo" placeholder="Codigo tarjeta">
-                                      </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                      
-                                      <button type="submit" class="mx-auto btn btn-primary">Pagar</button>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-
-                        </div>
-                      
-                            <label class="my-auto"or="txtstock">Cantidad</label>
-                     
-                        <div class="col">
-                            <input required type="text" class="w-50 form-control"
-                            onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"
-                            name="txtstock" id="txtstock" value="1" placeholder="">
-                        </div>
+                    <div class="custom-file">
+                        <input name="txtimagen" accept="image/*" value="{{ producto.imagen.url }}" type="file"
+                            class="custom-file-input" id="txtimagen" lang="es">
+                        <label class="custom-file-label w-50" for="txtimagen">{{ producto.imagen.name }}</label>
                     </div>
                 </div>
-               
+                {% else %}
+                <div class="form-group">
+                    <div class="custom-file">
+                        <input name="txtimagen" accept="image/*" type="file" class="custom-file-input" id="txtimagen"
+                            lang="es">
+                        <label class="custom-file-label w-50" for="txtimagen">Seleccionar archivo</label>
+                    </div>
+                </div>
+                {% endif %}
+
+
             </div>
+            <div class="container-info">
+                <div class="form-group">
+                    <h2><input class="form-control w-25" value="{{ producto.nombre }}" name="txtnombre" type="text">
+                    </h2>
+                </div>
+
+                <input type="hidden" value="{{ producto.id }}" name="txtid">
+
+                <h5> <input required type="text" class=" w-25 form-control form-control-sm w-25"
+                        onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"
+                        name="txtprecio" id="txtprecio" value="{{ producto.precio }}" placeholder=""></h5>
+
+
+                <p><textarea id="txtdecripcion" value="{{ producto.descripcion }}"
+                        class="form-control form-control-sm  w-50"
+                        name="txtdescripcion">{{ producto.descripcion }}</textarea></p>
+                <table class="table table-striped">
+                    {% else %}
+                    <div class="container-info">
+                        {% if producto.imagen %}
+                        <img src="{{ producto.imagen.url }}" alt="">
+                        {% endif %}
+                    </div>
+                    <div class="container-info">
+                        <h2>{{ producto.nombre }}</h2>
+                        <input type="hidden" value="{{ producto.id }}" name="txtid">
+                        <h5>$ {{  producto.precio }}</h5>
+                        <p>{{  producto.descripcion }}</p>
+                        <table class="table table-striped">
+                            {% endif %}
+
+                            {% if user.is_staff %}
+                            <tbody>
+                                <tr>
+                                    <td>Marca:</td>
+                                    <td><input name="txtmarca" value="{{ producto.marca }}"
+                                            class="w-25 form-control form-control-sm" type="text"></td>
+                                </tr>
+                                <tr>
+                                    <td>Medidas:</td>
+                                    <td><input required name="txtmedidas" value="{{ producto.medidas }}"
+                                            class="w-25 form-control form-control-sm" type="text"></td>
+                                </tr>
+                                <tr>
+                                    <td>Peso (kg):</td>
+                                    <td><input required type="text" class=" w-25 form-control form-control-sm"
+                                            onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"
+                                            name="txtpeso" id="txtpeso" value="{{ producto.peso }}" placeholder=""></td>
+
+                                </tr>
+                                <tr>
+                                    <td>Disponibilidad: </td>
+                                    <td>
+                                        <select class="form-control form-control-sm w-50" name="txtdisponibilidad">
+                                            {% if producto.disponibilidad is True %}
+                                            <option value="Disponbilble">Disponible</option>
+                                            <option value="No disponible">No disponible</option>
+                                            {% elif producto.disponibilidad is False %}
+                                            <option value="No disponbilble">No disponible</option>
+                                            <option value="Disponbilble">Disponible</option>
+
+                                            {% endif %}
+                                        </select>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            {% else %}
+                            <tbody>
+                                <tr>
+                                    <td>Marca:</td>
+                                    <td>{{  producto.marca }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Medidas:</td>
+                                    <td>{{ producto.medidas }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Peso:</td>
+                                    <td>{{ producto.peso }} kg</td>
+                                </tr>
+                            </tbody>
+                            {% endif %}
+                        </table>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col">
+                                    {% if user.is_staff %}
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <button type="submit" class="btn btn-primary">Actualizar </button>
+                                            </div>
+
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <button type="button" class="btn btn-danger" data-toggle="modal"
+                                                    data-target="#exampleModalCenter">
+                                                    Eliminar
+                                                </button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalCenterTitle">Eliminar
+                                                        producto {{ producto.nombre }}</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <H5 class="text-muted">Esta seguro que desea eliminar este producto?
+                                                    </H5>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">No</button>
+                                                        <a href="{% url 'eliminar_producto' producto.id %}" class="btn btn-danger  " role="button" aria-pressed="true">Eliminar</a>
+                                                   
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% else %}
+
+                                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                                        data-target="#exampleModalCenter">
+                                        Comprar
+                                    </button>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLongTitle">Confirmar tarjeta
+                                                    </h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="form-group">
+                                                        <input required type="text" class="form-control"
+                                                            onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"
+                                                            name="txtnumero" id="txtnumero"
+                                                            placeholder="Numero tarjeta">
+                                                    </div>
+                                                    <div class="row mx-auto">
+                                                        <label class="mx-auto" for="">Expiración</label>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <input placeholder="Mes" class="form-control"
+                                                                    type="number">
+                                                            </div>
+                                                            <span class="my-auto">-</span>
+                                                            <div class="col">
+                                                                <input placeholder="Año" class="form-control"
+                                                                    type="number">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input required type="text" class="form-control"
+                                                            onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"
+                                                            name="txtcodigo" id="txtcodigo"
+                                                            placeholder="Codigo tarjeta">
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="mx-auto btn btn-primary">Pagar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                {% if user.is_staff %}
+
+                                <div class="col">
+                                    <label class="my-auto" or="txtstock">Stock:</label>
+                                    <input required type="text" class=" w-50 form-control"
+                                        onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"
+                                        name="txtstock" id="txtstock" value="{{ producto.stock }}" placeholder="">
+                                </div>
+                                {% else %}
+
+                                <label class="my-auto" or="txtstock">Cantidad</label>
+
+                                <div class="col">
+                                    <input required type="text" class=" w-50 form-control"
+                                        onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"
+                                        name="txtstock" id="txtstock" value="1" placeholder="">
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                    </div>
         </form>
-
-
-
     </div>
     <script src="{% static 'js/jquery-3.3.1.slim.min.js' %}"></script>
     <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bs-custom-file-input.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/javamenu.js' %}"></script>
+    <script>
+        $(document).ready(function () {
+            bsCustomFileInput.init()
+        })
+    </script>
 </body>
 
 </html>
