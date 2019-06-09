@@ -59,9 +59,9 @@
   </div>
   <div class="general-container">
     {% if user|has_role:'cliente' %}
-    <h2>Mis Solicitudes</h2>
+    <h2>Mis Ordenes</h2>
     {% else %}
-    <h2>Solicitudes</h2>
+    <h2>Ordenes</h2>
     {% endif %}
     <div class="table-responsive">
       <table class="table table-hover">
@@ -88,45 +88,79 @@
             <td><a href="{% url 'enviar_producto' orden.id %}" class="btn btn-primary  " role="button"
               aria-pressed="true">Enviar</a></td>
             
-            {% comment %} <td> <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
-                data-target="#detalle">
-                Ver detalle
-              </button>
-
-              <!-- Modal -->
-              <div class="modal fade" id="detalle" tabindex="-1" role="dialog" aria-labelledby="1" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-scrollable" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="detalle">Modal title</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      Rut 1 asdasdsad
-                      <br>
-                      saddassad
-                      dadadasd
-                      asdsadsadsad
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-primary">Save changes</button>
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </td> {% endcomment %}
+          
           </tr>
 
           {% endfor %}
         </tbody>
       </table>
     </div>
+    {% if user|has_role:'cliente' %}
+    <h2>Mis Solicitudes</h2>
+    {% else %}
+    <h2>Solicitudes</h2>
+    {% endif %}
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr class="table-active">
+            <th scope="col">N°</th>
+            <th scope="col">Cliente</th>
+            <th scope="col">Fecha emision</th>
+            <th scope="col">Fecha llegada</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Enviar</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for solicitud in solicitudes %}
+          <tr>
+            <th scope="row">{{ solicitud.id }}</th>
+            <td>{{ solicitud.cliente }}</td>
+            <td>{{ solicitud.fecha_emision }}</td>
+            <td></td>
+            <td></td>
+            <td><a href="#" class="btn btn-primary  " role="button"
+              aria-pressed="true">Enviar</a></td>
+            
+          
+          </tr>
 
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% comment %} <td> <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+      data-target="#detalle">
+      Ver detalle
+    </button>
 
+    <!-- Modal -->
+    <div class="modal fade" id="detalle" tabindex="-1" role="dialog" aria-labelledby="1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="detalle">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Rut 1 asdasdsad
+            <br>
+            saddassad
+            dadadasd
+            asdsadsadsad
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </td> {% endcomment %}
   </div>
   <script src="{% static 'js/jquery-3.3.1.slim.min.js' %}"></script>
   <script src="{% static 'js/popper.min.js' %}"></script>

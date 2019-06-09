@@ -205,7 +205,12 @@ def lista_solicitudes(request):#faltar probar si funciona aun no lo veo equisde
         ordenes = Orden.objects.filter(cliente=request.user.pk)
     elif request.user.is_staff or request.user.is_superuser:
         ordenes = Orden.objects.all()
-    variables = {'ordenes':ordenes}
+    if has_role(user,[Cliente]):
+        solicitudes = Solicitud.objects.filter(cliente=request.user.pk)
+    elif request.user.is_staff or request.user.is_superuser:
+        solicitudes = Solicitud.objects.all()
+    variables = {'ordenes':ordenes,
+                'solicitudes':solicitudes}
 
     return render(request,'buenosaires/solicitudes.html',variables)
 
