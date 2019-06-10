@@ -136,12 +136,15 @@
             <td>{{ solicitud.hora_llegada }}</td>
             <td>{{ solicitud.tipo }}</td>
             <td>{{ solicitud.estado }}</td>
-            <td> <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#detalle-{{ solicitud.id }}">
+
+            <td> <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                data-target="#detalle-{{ solicitud.id }}">
                 Ver más
               </button>
 
               <!-- Modal -->
-              <div class="modal fade" id="detalle-{{ solicitud.id }}" tabindex="-1" role="dialog" aria-labelledby="1" aria-hidden="true">
+              <div class="modal fade" id="detalle-{{ solicitud.id }}" tabindex="-1" role="dialog" aria-labelledby="1"
+                aria-hidden="true">
                 <div class="modal-dialog modal-dialog-scrollable" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
@@ -151,15 +154,19 @@
                       </button>
                     </div>
                     <div class="modal-body">
-                     <p> {{ solicitud.descripcion }}</p>
+                      <p> {{ solicitud.descripcion }}</p>
                     </div>
                     <div class="modal-footer">
-                       
+                      {% if user.is_staff %}
                       <a href="{% url 'aprobar_solicitud' solicitud.id %}" class="mx-auto btn btn-info  " role="button"
                         aria-pressed="true">Aceptar</a>
                       <a href="{% url 'rechazar_solicitud' solicitud.id %}" class="mx-auto btn btn-danger  "
                         role="button" aria-pressed="true">Rechazar</a>
-                     
+                      {% else %}
+
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+
+                      {% endif %}
 
                     </div>
                   </div>
