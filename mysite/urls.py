@@ -23,3 +23,7 @@ urlpatterns = [
     path('',include('buenosaires.urls')),
     
 ]
+#Personalizzar titulos admin
+admin.site.site_header = "Administracion Buenos Aires"
+admin.site.index_title = "Buenos Aires"
+admin.site.site_title = "Administracion"
