@@ -73,7 +73,10 @@
             <th scope="col">Fecha emision</th>
             <th scope="col">Fecha llegada</th>
             <th scope="col">Estado</th>
+            {% if user.is_staff %}
             <th scope="col">Enviar</th>
+            {% endif %}
+
           </tr>
         </thead>
         <tbody>
@@ -83,12 +86,20 @@
             <td>{{ orden.cliente }}</td>
             <td>{{ orden.producto }}</td>
             <td>{{ orden.fecha_emision }}</td>
+            {% if orden.fecha_llegada is None  %}
+            <td>No asignada</td>
+            {% else %}
             <td>{{ orden.fecha_llegada }}</td>
+            {% endif %}
+
             <td>{{ orden.estado }}</td>
+            {% if user.is_staff %}
+
             <td><a href="{% url 'enviar_producto' orden.id %}" class="btn btn-primary  " role="button"
-              aria-pressed="true">Enviar</a></td>
-            
-          
+                aria-pressed="true">Enviar</a></td>
+            {% endif %}
+
+
           </tr>
 
           {% endfor %}
@@ -107,9 +118,12 @@
             <th scope="col">N°</th>
             <th scope="col">Cliente</th>
             <th scope="col">Fecha emision</th>
-            <th scope="col">Fecha llegada</th>
+            <th scope="col">Fecha disponible</th>
+            <th scope="col">Hora disponible</th>
+            <th scope="col">Tipo</th>
             <th scope="col">Estado</th>
-            <th scope="col">Enviar</th>
+            <th scope="col">Descripcion</th>
+
           </tr>
         </thead>
         <tbody>
@@ -118,49 +132,48 @@
             <th scope="row">{{ solicitud.id }}</th>
             <td>{{ solicitud.cliente }}</td>
             <td>{{ solicitud.fecha_emision }}</td>
-            <td></td>
-            <td></td>
-            <td><a href="#" class="btn btn-primary  " role="button"
-              aria-pressed="true">Enviar</a></td>
-            
-          
+            <td>{{ solicitud.fecha_llegada }} </td>
+            <td>{{ solicitud.hora_llegada }}</td>
+            <td>{{ solicitud.tipo }}</td>
+            <td>{{ solicitud.estado }}</td>
+            <td> <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#detalle-{{ solicitud.id }}">
+                Ver más
+              </button>
+
+              <!-- Modal -->
+              <div class="modal fade" id="detalle-{{ solicitud.id }}" tabindex="-1" role="dialog" aria-labelledby="1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="detalle-{{ solicitud.id }}">Descripcion:</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                     <p> {{ solicitud.descripcion }}</p>
+                    </div>
+                    <div class="modal-footer">
+                       
+                      <a href="{% url 'aprobar_solicitud' solicitud.id %}" class="mx-auto btn btn-info  " role="button"
+                        aria-pressed="true">Aceptar</a>
+                      <a href="{% url 'rechazar_solicitud' solicitud.id %}" class="mx-auto btn btn-danger  "
+                        role="button" aria-pressed="true">Rechazar</a>
+                     
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+
           </tr>
 
           {% endfor %}
         </tbody>
       </table>
     </div>
-    {% comment %} <td> <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
-      data-target="#detalle">
-      Ver detalle
-    </button>
 
-    <!-- Modal -->
-    <div class="modal fade" id="detalle" tabindex="-1" role="dialog" aria-labelledby="1" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-scrollable" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="detalle">Modal title</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            Rut 1 asdasdsad
-            <br>
-            saddassad
-            dadadasd
-            asdsadsadsad
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary">Save changes</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-          </div>
-        </div>
-      </div>
-    </div>
-  </td> {% endcomment %}
   </div>
   <script src="{% static 'js/jquery-3.3.1.slim.min.js' %}"></script>
   <script src="{% static 'js/popper.min.js' %}"></script>

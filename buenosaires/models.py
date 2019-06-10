@@ -39,12 +39,15 @@ class Producto(models.Model):
     def __str__(self):
         return self.nombre
 class Solicitud(models.Model):
-    
+    estado = (('Sin revisar','Sin revisar'),
+              ('Aprobada','Aporbada'),
+              ('Rechazada','Rechazada'))
     fecha_emision = models.DateTimeField(default=timezone.now)
     cliente = models.ForeignKey(User,on_delete=models.CASCADE)
     hora_llegada = models.TimeField()
     fecha_llegada = models.DateField()
     tipo = models.CharField(max_length=20)
+    estado = models.CharField(max_length=20,choices=estado,default='Sin revisar',null=True,blank=True)
     descripcion = models.TextField()
 
     def __int__(self):

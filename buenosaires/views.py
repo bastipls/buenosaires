@@ -191,10 +191,11 @@ def solocitar_mantencion(request):
         solicitud.descripcion = request.POST.get('txtdescripcion')
         try:
             messages.success(request,'Solicitud enviada')
+            solicitud.save()
         except:
             alert = 'roja' 
             messages.error(request,'No se a podido enviar ')
-        solicitud.save()
+        
     variables = {'alert':alert}
     return render(request,'buenosaires/solicitar_mantencion.html',variables)
 @login_required(login_url='login')
@@ -214,18 +215,26 @@ def lista_solicitudes(request):#faltar probar si funciona aun no lo veo equisde
 
     return render(request,'buenosaires/solicitudes.html',variables)
 
-
+@user_passes_test(lambda u:u.is_staff, login_url=('login'))  
 def enviar_producto(request,id):
-    orden = get_object_or_404(Orden,id=id)
     act = Orden.objects.filter(id=id)
-    act.update(fecha_llegada=timezone.now() + timezone.timedelta(days=1))
+    act.update(fecha_llegada=timezone.now() + timezone.timedelta(days=3))
     act.update(estado='Enviada')
     return redirect('lista_solicitudes')
 @user_passes_test(lambda u:u.is_staff, login_url=('login'))  
-def detalle_solicitudes(request):##esto es para solicitudes no orden
-    pass
+def aprobar_solicitud(request,id):##esto es para solicitudes no orden
+    soli = Solicitud.objects.filter(id=id)
+    soli.update(estado='Aprobada')
+    return redirect('lista_solicitudes')
+@user_passes_test(lambda u:u.is_staff, login_url=('login')) 
+def rechazar_solicitud(request,id):##esto es para solicitudes no orden
+    #Esto es otra foram de actualizar un objeto mas segura que la  de arriba xd
+    solicitud = get_object_or_404(Solicitud,id=id)
+    solicitud.estado = 'Rechazada'
+    solicitud.save(update_fields=['estado'])
+    
+    return redirect('lista_solicitudes')
 
 def stock_proveedores(request):#web servies
     pass
-###FALTA INTERFAZ VER CLIENTES MODIFICO INTERFAZ DE ADMIN
-#MODIFICAR PRODUCTOS
+
