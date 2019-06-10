@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '6r&@&w$2lr0j0tlxq5*_ar+j^wiz17eyxef&a&!*7i8s-q12_t'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', '. pythonanywhere.com']
+ALLOWED_HOSTS = ['127.0.0.1','buenossaires.pythonanywhere.com']
 
 
 # Application definition
@@ -60,7 +60,9 @@ ROOT_URLCONF = 'mysite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR,'templates/')
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
