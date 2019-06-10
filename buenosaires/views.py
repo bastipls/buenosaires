@@ -6,12 +6,19 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.context_processors import request
 from django.urls import reverse
+from django.utils import timezone
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
 from rolepermissions.checkers import has_role
 from rolepermissions.roles import assign_role
 from rolepermissions.utils import user_is_authenticated
-from django.utils import timezone
-from buenosaires.models import Orden, Producto, Solicitud, Usuario
+
+from buenosaires.models import (Orden, Producto, Producto_proveedor, Solicitud,
+                                Usuario)
 from mysite.roles import Cliente
+
+from .serializers import Producto_proveedorSerializador
 
 
 def login_view(request):
@@ -235,6 +242,10 @@ def rechazar_solicitud(request,id):##esto es para solicitudes no orden
     
     return redirect('lista_solicitudes')
 
-def stock_proveedores(request):#web servies
-    pass
-
+class stock_proveedores(APIView):#web servies
+    def get(self,request):
+        productos = Producto_proveedor.objects.all()
+        serializador = Producto_proveedorSerializador(productos ,context={"request":request},many=True)
+        return Response(serializador.data)
+    def post(self,request):
+        pass
