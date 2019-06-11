@@ -126,9 +126,11 @@ def detalle_producto(request,id):#falta se crea orden y se resta stock
             
             pro.medidas = request.POST.get('txtmedidas')
             if len(request.POST.get('txtmarca')) == 0:
-                pass
+                
+                print("POR AUI PASE XD")
             else:
-                producto.marca = request.POST.get('txtmarca') 
+                pro.marca = request.POST.get('txtmarca') 
+               
             pro.peso = int(request.POST.get('txtpeso'))
             if request.POST.get('txtdisponibilidad') == 'Disponbile':
                 pro.disponibilidad = True
@@ -142,7 +144,7 @@ def detalle_producto(request,id):#falta se crea orden y se resta stock
             try:
                 alert = 'verde' 
                 pro.save()
-                print(request.FILES.get('txtimagen'))
+                print(request.POST.get('txtmarca'))
                 messages.success(request,'Producto actualizado con exito')
                 return redirect('detalle_producto',id=producto.id)
                 
