@@ -1,8 +1,8 @@
-var staticCacheName ='django-pwa-v5';
+var staticCacheName ='django-pwa-v5'+ new Date().getTime();
 var filesToCache = [
     '/',
-    '/registro',
-    '/productos',
+    '/registro/',
+    '/productos/',
     '/static/img/icons/icon-72x72.png',
     '/static/img/icons/icon-96x96.png',
     '/static/img/icons/icon-128x128.png',
