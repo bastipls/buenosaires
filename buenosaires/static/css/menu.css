@@ -53,7 +53,9 @@
     margin-right: 6px;
     color: white;
 }
-
+#btn-menu{
+    margin-right: 10px;
+}
 .icon-bars:hover {
     color:  rgba(0,23,28,.8);
 }
@@ -136,7 +138,7 @@ nav input{
 
     }
 
-    .icon-bars {
+#btn-menu {
         display: none;
     }
 

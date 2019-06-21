@@ -1,8 +1,9 @@
-var staticCacheName ='django-pwa-v5'+ new Date().getTime();
+var staticCacheName ='django-pwa-v9'+ new Date().getTime();
 var filesToCache = [
     '/',
     '/registro/',
     '/productos/',
+    '/login/',
     '/static/img/icons/icon-72x72.png',
     '/static/img/icons/icon-96x96.png',
     '/static/img/icons/icon-128x128.png',
@@ -13,6 +14,7 @@ var filesToCache = [
     '/static/img/icons/icon-512x512.png',
     '/static/img/default-product.jpg',
     '/static/img/img-about.jpg',
+    '/static/img/icon-menu.png',
     '/static/js/bootstrap.min.js',
     '/static/js/bs-custom-file-input.min.js',
     '/static/js/javamenu.js',
@@ -69,7 +71,7 @@ self.addEventListener("fetch", event => {
                 return response || fetch(event.request);
             })
             .catch(() => {
-                return caches.match('offline');
+                return caches.match('/');
             })
     )
 });
