@@ -15,7 +15,7 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
+PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'buenosaires/static/js', 'serviceworker.js')
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
@@ -25,7 +25,7 @@ SECRET_KEY = '6r&@&w$2lr0j0tlxq5*_ar+j^wiz17eyxef&a&!*7i8s-q12_t'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','buenossaires.pythonanywhere.com']
+# ALLOWED_HOSTS = ['127.0.0.1','buenossaires.pythonanywhere.com']
 
 
 # Application definition
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'pwa',
     'rest_framework',
     'corsheaders',
     'rolepermissions',
@@ -129,3 +130,61 @@ CORS_ORIGIN_ALLOW_ALL = True
 STATIC_URL = '/static/'
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+# CORS_ORIGIN_WHITELIST = (
+#     'bastipls.github.io',
+# )
+# PWAAAAAAAAAAAAAA HEREEEE XD
+
+
+PWA_APP_NAME = 'Buenos Aires'
+PWA_APP_DESCRIPTION = "Aires acondicionados"
+PWA_APP_THEME_COLOR = '#e8b6ee'
+PWA_APP_BACKGROUND_COLOR = '#fbfbfb'
+PWA_APP_DISPLAY = 'standalone'
+# PWA_APP_SCOPE = '',
+PWA_APP_ORIENTATION = 'portrait'
+PWA_APP_START_URL = '/'
+PWA_APP_ICONS = [
+    {
+        'src': '/static/img/icons/icon-72x72.png',
+        'sizes': '72x72'
+    },
+       {
+        'src': '/static/img/icons/icon-96x96.png',
+        'sizes': '96x96'
+    },
+       {
+        'src': '/static/img/icons/icon-128x128.png',
+        'sizes': '128x128'
+    },
+       {
+        'src': '/static/img/icons/icon-144x144.png',
+        'sizes': '144x144'
+    },
+       {
+        'src': '/static/img/icons/icon-152x152.png',
+        'sizes': '152x152'
+    },
+       {
+        'src': '/static/img/icons/icon-192x192.png',
+        'sizes': '192x192'
+    },
+       {
+        'src': '/static/img/icons/icon-384x384.png',
+        'sizes': '384x384'
+    },
+       {
+        'src': '/static/img/icons/icon-512x512.png',
+        'sizes': '512x512'
+    }
+]
+PWA_APP_SPLASH_SCREEN = [
+    {
+        'src': '/static/img/icons/icons/icon-512x512.png',
+        'media': '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)'
+    }
+]
+PWA_APP_DIR = 'ltr'
+PWA_APP_LANG = 'es-ES'

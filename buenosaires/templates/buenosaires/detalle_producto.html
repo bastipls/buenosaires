@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 {% load static %}
+{% load pwa %}
 {% load permission_tags %}
 <html lang="es">
 
 <head>
+{% progressive_web_app_meta %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comprar producto</title>
@@ -274,7 +276,7 @@
                                                             placeholder="Codigo tarjeta">
                                                     </div>
                                                 </div>
-                                                <div class="modal-footer">
+                                                <div class="modal-footer mx-auto">
                                                     <button type="submit" class="mx-auto btn btn-primary">Pagar</button>
                                                 </div>
                                             </div>

@@ -24,6 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('apiproveedores/',views.stock_proveedores.as_view()),
     path('',include('buenosaires.urls')),
+    path('', include('pwa.urls')),
     
 ]
 #Personalizzar titulos admin
